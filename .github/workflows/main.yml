@@ -18,3 +18,4 @@ jobs:
           scope: subscription
           region: eastus
           template: test.bicep
+          additionalArguments: '--what-if'
