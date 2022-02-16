@@ -13,5 +13,8 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - run: |
-          az group list
+      - uses: azure/arm-deploy@v1
+        with:
+          scope: subscription
+          region: eastus
+          template: test.bicep
