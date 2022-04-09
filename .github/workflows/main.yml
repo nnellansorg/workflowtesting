@@ -17,6 +17,6 @@ jobs:
         with:
           scope: subscription
           region: eastus
-          additionalArguments: "--what-if"
+          additionalArguments: "--confirm-with-what-if"
           template: test.bicep
           
