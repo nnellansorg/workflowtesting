@@ -13,10 +13,14 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: azure/arm-deploy@v1
+      - uses: azure/CLI@v1
         with:
-          scope: subscription
-          region: eastus
-          additionalArguments: "--confirm-with-what-if"
-          template: test.bicep
+          inlinescript: |
+            az deployment sub create --location eastus2 --template-file test.bicep --what-if
+      #- uses: azure/arm-deploy@v1
+      #  with:
+      #    scope: subscription
+      #    region: eastus
+      #    additionalArguments: "--confirm-with-what-if"
+      #    template: test.bicep
           
