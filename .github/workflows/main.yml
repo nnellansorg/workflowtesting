@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-job:
-    runs-on: ubuntu-latest
 
+  what-if-deployment:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/login@v1
@@ -16,11 +16,24 @@ jobs:
       - uses: azure/CLI@v1
         with:
           inlinescript: |
-            az deployment sub create --location eastus --template-file test.bicep --confirm-with-what-if
+            az deployment sub create --location eastus --template-file test.bicep --what-if
       #- uses: azure/arm-deploy@v1
       #  with:
       #    scope: subscription
       #    region: eastus
       #    additionalArguments: "--confirm-with-what-if"
       #    template: test.bicep
-          
+
+  prod-deployment:
+    runs-on: ubuntu-latest
+    needs: what-if-deployment
+    environment: Production
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: azure/CLI@v1
+        with:
+          inlinescript: |
+            az deployment sub create --location eastus --template-file test.bicep
