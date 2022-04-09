@@ -16,7 +16,7 @@ jobs:
       - uses: azure/CLI@v1
         with:
           inlinescript: |
-            az deployment sub create --location eastus --template-file test.bicep --what-if
+            az deployment sub create --location eastus --template-file test.bicep --confirm-with-what-if
       #- uses: azure/arm-deploy@v1
       #  with:
       #    scope: subscription
