@@ -13,29 +13,24 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: azure/CLI@v1
-        name: 'Az CLI Deployment'
+      - uses: azure/arm-deploy@v1
         with:
-          inlinescript: |
-            az deployment sub create --location eastus --template-file test.bicep --what-if
-      #- uses: azure/arm-deploy@v1
-      #  with:
-      #    scope: subscription
-      #    region: eastus
-      #    additionalArguments: "--confirm-with-what-if"
-      #    template: test.bicep
+          scope: subscription
+          region: eastus
+          additionalArguments: "--what-if"
+          template: test.bicep
 
-  prod-deployment:
-    runs-on: ubuntu-latest
-    needs: what-if-deployment
-    environment: Production
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: azure/CLI@v1
-        name: 'Az CLI Deployment'
-        with:
-          inlinescript: |
-            az deployment sub create --location eastus --template-file test.bicep
+  #prod-deployment:
+  #  runs-on: ubuntu-latest
+  #  needs: what-if-deployment
+  #  environment: Production
+  #  steps:
+  #    - uses: actions/checkout@v2
+  #    - uses: azure/login@v1
+  #      with:
+  #        creds: ${{ secrets.AZURE_CREDENTIALS }}
+  #    - uses: azure/CLI@v1
+  #      name: 'Az CLI Deployment'
+  #      with:
+  #        inlinescript: |
+  #          az deployment sub create --location eastus --template-file test.bicep
